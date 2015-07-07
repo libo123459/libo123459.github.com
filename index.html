@@ -81,28 +81,27 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/07/07/hello-world/" title="Hello World" itemprop="url">Hello World</a>
+      <a href="/2015/07/07/hello-world/" title="关于hexo搭建github博客几点问题" itemprop="url">关于hexo搭建github博客几点问题</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="李博" target="_blank" itemprop="author">李博</a>
 		
   <p class="article-time">
-    <time datetime="2015-07-07T10:41:48.000Z" itemprop="datePublished"> 发表于 2015-07-07</time>
+    <time datetime="2015-07-07T12:26:32.000Z" itemprop="datePublished"> 发表于 2015-07-07</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>近日用hexo搭建github博客出现了若干问题，对于一个弱鸡来说前前后后花了大概2天才把这个博客成功的端出台面，介于总结并记录学习中的点滴，以备牢记，整理如下几点常见问题。</p>
+<h2 id="常见问题总汇">常见问题总汇</h2><h3 id="Mac无法安装hexo">Mac无法安装hexo</h3><p>和win机不同，osx由于权限问题，正常的git指令可能无法安装hexo，需换用如下指令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npm install --unsafe-perm --verbose -g hexo</span><br></pre></td></tr></table></figure>
+<h3 id="正确的deployment">正确的deployment</h3><p>网上搜索的其他部署配置可能有问题，经本人亲测，100%有效配置如下。<br>PS：冒号后注意接空格，否则可能导致yml无效</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy：</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: git@github.com:yourname/yourname.github.com.git(尽量用ssh地址)</span><br><span class="line">  branch： master</span><br></pre></td></tr></table></figure>
+<h3 id="执行hexo_d指令时提示找不到git">执行hexo d指令时提示找不到git</h3><p>自从hexo3.0之后，需要安装如下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+<h3 id="输入某些指令后的其他问题">输入某些指令后的其他问题</h3><p>删除目录下的db.json文件</p>
 
         
         
