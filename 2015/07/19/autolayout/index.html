@@ -24,7 +24,7 @@
 
 
 
-  <meta name="keywords" content="疑问," />
+  <meta name="keywords" content="IOS学习笔记," />
 
 
 
@@ -47,7 +47,7 @@
 
 
 
-  <title> 关于hexo搭建github博客几点问题 // 猫大伯的啰里八嗦 </title>
+  <title> Xcode布局原理 // 猫大伯的啰里八嗦 </title>
 </head>
 
 <body>
@@ -150,7 +150,7 @@
           
           
             
-              关于hexo搭建github博客几点问题
+              Xcode布局原理
             
           
         </h1>
@@ -158,7 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          发表于 2015-07-08
+          发表于 2015-07-19
         </span>
 
         
@@ -175,14 +175,38 @@
       
 
       
-        <p>近日用hexo搭建github博客出现了若干状况，跌跌撞撞的花了大概2天才把这个博客成功的端出台面，介于总结并记录学习中的点滴，以备牢记，整理如下几点常见问题。</p>
-<h2 id="常见问题总汇">常见问题总汇</h2><h3 id="Mac无法安装hexo">Mac无法安装hexo</h3><p>和win机不同，osx由于权限问题，正常的git指令可能无法安装hexo，需换用如下指令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npm install --unsafe-perm --verbose -g hexo</span><br></pre></td></tr></table></figure>
-<h3 id="正确的deployment">正确的deployment</h3><p>网上搜索的其他部署配置可能有问题，经本人亲测，100%有效配置如下。<br>PS：冒号后注意接空格，否则可能导致yml无效</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy：</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: git@github.com:yourname/yourname.github.com.git(尽量用ssh地址)</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-<h3 id="执行hexo_d指令时提示找不到git">执行hexo d指令时提示找不到git</h3><p>自从hexo3.0之后，需要安装如下命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-<h3 id="输入某些指令后的其他问题">输入某些指令后的其他问题</h3><p>删除目录下的db.json文件</p>
+        <h2 id="IOS8自动布局AutoLayout的基本原理">IOS8自动布局AutoLayout的基本原理</h2><hr>
+<p>苹果在2014年发布iphone6和IOS8之后，针对新的设备和系统界面适配进行了若干改进，介于本人初次接触AutoLayout和sizeclass时有些疑问和不解，经过查阅资料和调试，整理了如下笔记。</p>
+<h4 id="一、View的基本原理">一、View的基本原理</h4><p>视图是app界面的最基本单元，在矩形区域内显示目标内容。如下图所示，头像和名字都是一个视图。</p>
+<p><img src="http://ww4.sinaimg.cn/large/71d610d9jw1eu7xo3qtlrj20h80j7gml.jpg" alt="shuping"></p>
+<p>对于一个矩形单元而言，要是在平面直角坐标系中准确描述其位置，需要如下四个布局属性（Layout Attribute）：<br></p>
+<ul>
+<li>水平位置－x</li>
+<li>垂直位置－y</li>
+<li>宽度－width</li>
+<li>高度－height</li>
+</ul>
+<h4 id="二、传统的布局方式及缺点">二、传统的布局方式及缺点</h4><p>在以往传统的布局模式下，一个视图需要明确的给出四个属性，这就导致了当视图数量变多，频繁变动，或者横竖屏转动的时候要重新定义其四个属性。这显然不是一个令人满意的方法。</p>
+<p>苹果公司在意识到开发者对此头疼之时，给出了一个更好的解决方案。在一个新的视图创建的同时，给出了其相对于父视图的“对齐方式与缩放系数”。当父视图发生变化时，子视图会自动得出其新位置，无需再重新提供。</p>
+<p>但是这种解决方案在初始时期也存在几个问题：</p>
+<ul>
+<li>其描述界面变化规则不够灵活，很多变化规则无法精确描述。缩放比例是UIKit内部计算的，开发者无法制定缩放比例的精确值。</li>
+<li>变化规则之基于父、子视图之间，无法建立同级或者跨级视图之间的关系。比如计算器中的按钮与按钮之间。</li>
+</ul>
+<p>所以那个时期开发者依旧苦逼的用着坐标定位来解决转屏问题，要么干脆做两套界面。<br>随着iphone产品的更新迭代，ipad的出现，分辨率出现了更多不同，如果继续采用这种旧式方法，工作量之大可以想象。</p>
+<p>于是苹果又一次意识到了开发者们的夙愿，在IOS6发布点时候引入了<strong>自动布局（Auto Layout）</strong>与<strong>布局约束（Layout Constraint）</strong>的概念，送出了一份全新的解决方案。</p>
+<h4 id="三、自动布局的基本原理">三、自动布局的基本原理</h4><p>Auto Layout的基本原理就是在<strong>两个视图之间</strong>建立<strong>精确的现行变化规则</strong>。即：</p>
+<blockquote>
+<p>y＝m＊x＋c</p>
+</blockquote>
+<p>x和y是界面中两个视图的布局属性，m是比例系数，c为常量也叫偏移量。比如，如果我想把之前的名字标签紧贴在头像下方，且要保持宽度一致，那么可以建立如下规则：</p>
+<ul>
+<li>标签的水平中心x坐标d＝1.0*头像的水平中心x坐标＋0.0 （头像和标签水平中心对齐）</li>
+<li>标签的顶部y坐标＝1.0*头像的底部y坐标＋0.0 （头像的底部和标签顶部紧贴）</li>
+<li>标签的宽度w＝1.0*头像的宽度w＋0.0 （头像和标签宽度相等）</li>
+</ul>
+<p><img src="http://ww4.sinaimg.cn/large/71d610d9jw1eu7xmzbn3wj20hb0d0aax.jpg" alt="hengping"></p>
+<p>没个线性变化规则都叫做<strong>布局约束（Layout Constraint）</strong>。正如之前每个视图需要4个布局属性才可能准确定位，所以一般来说需要建立4个布局约束。</p>
 
       
     </div>
@@ -191,11 +215,23 @@
       
         <div class="post-tags">
           
-            <a href="/tags/疑问/"> #疑问 </a>
+            <a href="/tags/IOS学习笔记/"> #IOS学习笔记 </a>
           
         </div>
       
 
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/18/hello-world/">关于hexo搭建github博客几点问题</a>
+            
+          </div>
+        </div>
       
 
       
@@ -256,7 +292,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-count">2</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -270,7 +306,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-count">2</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -304,7 +340,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见问题总汇"><span class="nav-number">1.</span> <span class="nav-text">常见问题总汇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mac无法安装hexo"><span class="nav-number">1.1.</span> <span class="nav-text">Mac无法安装hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正确的deployment"><span class="nav-number">1.2.</span> <span class="nav-text">正确的deployment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行hexo_d指令时提示找不到git"><span class="nav-number">1.3.</span> <span class="nav-text">执行hexo d指令时提示找不到git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入某些指令后的其他问题"><span class="nav-number">1.4.</span> <span class="nav-text">输入某些指令后的其他问题</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#IOS8自动布局AutoLayout的基本原理"><span class="nav-number">1.</span> <span class="nav-text">IOS8自动布局AutoLayout的基本原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、View的基本原理"><span class="nav-number">1.0.1.</span> <span class="nav-text">一、View的基本原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、传统的布局方式及缺点"><span class="nav-number">1.0.2.</span> <span class="nav-text">二、传统的布局方式及缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、自动布局的基本原理"><span class="nav-number">1.0.3.</span> <span class="nav-text">三、自动布局的基本原理</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
