@@ -152,72 +152,6 @@
           
           
             
-              <a class="post-title-link" href="/2015/08/03/setter and getter/">
-                关于Objective-c的setter和getter
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-08-03
-        </span>
-
-        
-
-        
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="一、为什么要用setter和getter？">一、为什么要用setter和getter？</h3><p>setter和getter是赋值和取值的方法，符合OOP的封装原则和安全性。相比直接把变量暴露在外面，setter和getter是一个良好的中间层。<br><br>Stackoverflow中有个回答蛮不错：<br></p>
-<blockquote>
-<p>Tell, Don’t ask. The Pragmatic Bookshelf<br><br>“That is, you should endeavor to tell objects what you want them to do; do not ask them questions about their state, make a decision, and then tell them what to do.”</p>
-</blockquote>
-<p>直接暴露字段显然会更容易写出ask state, make decision, and tell them what to do的代码。这种写法更像过程式而不是面向对象。</p>
-<h3 id="二、setter和getter的一般写法">二、setter和getter的一般写法</h3><p>在Objective-C的setter和getter器，当然也和一般的语言没有什么不同。只不过，添加了一些自己的特性。<br>比如有一个实例变量：int age;<br>先在.h文件中声明setter和getter器<br></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)setAge:(<span class="keyword">int</span>)newAge;  </span><br><span class="line">-(<span class="keyword">int</span>)age;</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">然后在.m文件中具体实现</span><br><span class="line"></span><br><span class="line">``` c</span><br><span class="line">-(<span class="keyword">void</span>)setAge:(<span class="keyword">int</span>)newAge</span><br><span class="line">&#123;</span><br><span class="line">    age=newAge;</span><br><span class="line">&#125;</span><br><span class="line">-(<span class="keyword">int</span>)age</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可以看出来，在Objective-C中setter器没什么区别，不过getter器的方法名缺少了get，因为get…在Objective-C有别的用处，所以getter器直接写的就是变量名。</p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
               <a class="post-title-link" href="/2015/07/19/autolayout/">
                 Xcode布局原理
               </a>
@@ -380,7 +314,7 @@
         <div class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">2</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
