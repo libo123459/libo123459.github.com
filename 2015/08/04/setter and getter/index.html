@@ -47,7 +47,7 @@
 
 
 
-  <title> Xcode布局原理 // 猫大伯的啰里八嗦 </title>
+  <title> 关于Objective-c的setter和getter // 猫大伯的啰里八嗦 </title>
 </head>
 
 <body>
@@ -150,7 +150,7 @@
           
           
             
-              Xcode布局原理
+              关于Objective-c的setter和getter
             
           
         </h1>
@@ -158,7 +158,7 @@
 
       <div class="post-meta">
         <span class="post-time">
-          发表于 2015-07-19
+          发表于 2015-08-04
         </span>
 
         
@@ -175,39 +175,79 @@
       
 
       
-        <h2 id="IOS8自动布局AutoLayout的基本原理">IOS8自动布局AutoLayout的基本原理</h2><hr>
-<p>苹果在2014年发布iphone6和IOS8之后，针对新的设备和系统界面适配进行了若干改进，介于本人初次接触AutoLayout和sizeclass时有些疑问和不解，经过查阅资料和调试，整理了如下笔记。</p>
-<h4 id="一、View的基本原理">一、View的基本原理</h4><p>视图是app界面的最基本单元，在矩形区域内显示目标内容。如下图所示，头像和名字都是一个视图。</p>
-<p><img src="http://ww4.sinaimg.cn/large/71d610d9jw1eu7xo3qtlrj20h80j7gml.jpg" alt="shuping"></p>
-<p>对于一个矩形单元而言，要是在平面直角坐标系中准确描述其位置，需要如下四个布局属性（Layout Attribute）：<br></p>
-<ul>
-<li>水平位置－x</li>
-<li>垂直位置－y</li>
-<li>宽度－width</li>
-<li>高度－height</li>
-</ul>
-<a id="more"></a>
-<h4 id="二、传统的布局方式及缺点">二、传统的布局方式及缺点</h4><p>在以往传统的布局模式下，一个视图需要明确的给出四个属性，这就导致了当视图数量变多，频繁变动，或者横竖屏转动的时候要重新定义其四个属性。这显然不是一个令人满意的方法。</p>
-<p>苹果公司在意识到开发者对此头疼之时，给出了一个更好的解决方案。在一个新的视图创建的同时，给出了其相对于父视图的“对齐方式与缩放系数”。当父视图发生变化时，子视图会自动得出其新位置，无需再重新提供。</p>
-<p>但是这种解决方案在初始时期也存在几个问题：</p>
-<ul>
-<li>其描述界面变化规则不够灵活，很多变化规则无法精确描述。缩放比例是UIKit内部计算的，开发者无法制定缩放比例的精确值。</li>
-<li>变化规则之基于父、子视图之间，无法建立同级或者跨级视图之间的关系。比如计算器中的按钮与按钮之间。</li>
-</ul>
-<p>所以那个时期开发者依旧苦逼的用着坐标定位来解决转屏问题，要么干脆做两套界面。<br>随着iphone产品的更新迭代，ipad的出现，分辨率出现了更多不同，如果继续采用这种旧式方法，工作量之大可以想象。</p>
-<p>于是苹果又一次意识到了开发者们的夙愿，在IOS6发布点时候引入了<strong>自动布局（Auto Layout）</strong>与<strong>布局约束（Layout Constraint）</strong>的概念，送出了一份全新的解决方案。</p>
-<h4 id="三、自动布局的基本原理">三、自动布局的基本原理</h4><p>Auto Layout的基本原理就是在<strong>两个视图之间</strong>建立<strong>精确的现行变化规则</strong>。即：</p>
+        <h3 id="一、为什么要用setter和getter？">一、为什么要用setter和getter？</h3><p>setter和getter是赋值和取值的方法，符合OOP的封装原则和安全性。相比直接把变量暴露在外面，setter和getter是一个良好的中间层。<br><br>Stackoverflow中有个回答蛮不错：<br></p>
 <blockquote>
-<p>y＝m＊x＋c</p>
+<p>Tell, Don’t ask. The Pragmatic Bookshelf<br><br>“That is, you should endeavor to tell objects what you want them to do; do not ask them questions about their state, make a decision, and then tell them what to do.”</p>
 </blockquote>
-<p>x和y是界面中两个视图的布局属性，m是比例系数，c为常量也叫偏移量。比如，如果我想把之前的名字标签紧贴在头像下方，且要保持宽度一致，那么可以建立如下规则：</p>
+<p>既：直接暴露字段显然会更容易写出ask state, make decision, and tell them what to do的代码。这种写法更像过程式而不是面向对象。</p>
+<hr>
+<h3 id="二、setter和getter的一般写法">二、setter和getter的一般写法</h3><p>在Objective-C的setter和getter器，当然也和一般的语言没有什么不同。只不过，添加了一些自己的特性。<br>比如有一个实例变量：int age;<br>先在.h文件中声明setter和getter器<br><br><a id="more"></a></p>
+<pre><code>-(<span class="typename">void</span>)<span class="string">setAge:</span>(<span class="typename">int</span>)newAge;  
+-(<span class="typename">int</span>)age;
+</code></pre><p>  然后在.m文件中具体实现</p>
+<pre><code>-(<span class="typename">void</span>)<span class="string">setAge:</span>(<span class="typename">int</span>)newAge
+{
+    age=newAge;
+}
+-(<span class="typename">int</span>)age
+{
+    <span class="keyword">return</span> age;
+}
+</code></pre><p>可以看出来，在Objective-C中setter器没什么区别，不过getter器的方法名缺少了get，因为get…在Objective-C有别的用处，所以getter器直接写的就是变量名。</p>
+<hr>
+<h3 id="三、setter和getter的调用方法">三、setter和getter的调用方法</h3><p>一般的调用方法，是传统的带中括号[]的调用方法，比如</p>
+<pre><code><span class="keyword">Person</span>* <span class="keyword">person</span>=<span class="comment">[<span class="comment">[Person alloc]</span>init]</span>;  
+<span class="comment">[person setAge:13]</span>;  
+int age=<span class="comment">[person age]</span>;  
+</code></pre><p>点调用的方式</p>
+<pre><code><span class="keyword">person</span>.age=13;  //.调用出现在=号左边，相当于setter  
+int age=<span class="keyword">person</span>.age   //.调用出现在=号的右边，相当于getter  
+NSLog(@<span class="string">"%i"</span>,<span class="keyword">person</span>.age);//这也是getter 
+</code></pre><hr>
+<h3 id="四、setter和getter的改进写法">四、setter和getter的改进写法</h3><p>每次要为一个属性写上getter和setter，不得不手十分麻烦，所以有了更简单的写法，在.h文件里，直接这样写，表示声明了一个实例属性和它的getter和setter器</p>
+<pre><code><span class="annotation">@property</span> <span class="keyword">int</span> age; 
+</code></pre><p>然后在.m文件中这样写，表示实现setteer和getter</p>
+<pre><code><span class="at_rule">@<span class="keyword">synthesize</span> age</span>;  
+</code></pre><p>这样，就可以和以前一样调用getter和setter了。</p>
+<hr>
+<h3 id="五、setter和getter的改进优化">五、setter和getter的改进优化</h3><p>可以看到，getter器的方法名直接就是变量名，方法名和变量名一样，容易让人迷糊，所以，可以这样优化。在.h文件中依然这样声明</p>
+<pre><code><span class="annotation">@property</span> <span class="keyword">int</span> age;  
+</code></pre><p>在.m文件中，这样去写，</p>
+<pre><code><span class="at_rule">@synthesize<span class="preprocessor"> age</span>=_age;</span> <span class="comment">//加上一个_  </span>
+<span class="comment">//这么，我们就可以去使用_age   和使用age一样  </span>
+<span class="function">-</span>(void)show  
+{  
+    <span class="function">NSLog</span>(<span class="at_rule">@<span class="string">"%i"</span>,_age);</span>  
+}  
+</code></pre><hr>
+<h3 id="六、@property的属性">六、@property的属性</h3><p>可以使用属性来规定@property，设定的方式如下：</p>
+<pre><code>@<span class="keyword">property</span> （attribute1[,attrubute2,...]）
+</code></pre><p>举个例子：</p>
+<pre><code><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) Engine* engine;  
+</code></pre><p>如果你在@property设置了属性，如果你使用@synthesize，那么它会自动帮你完成这些属性的实现，如果你是自己手动的去完成实现的话，那么，你必须自己写出这些属性的实现。</p>
+<h6 id="1-设置访问方法的名字">1.设置访问方法的名字</h6><p>默认的getter和setter器的名称是和变量名关联的，一定是setVirableName和virableName，比如上面的变量age，setter是setAge，getter是age。<br>可以通过设置@property中的setter和getter属性来修改setter和getter器的方法名。</p>
 <ul>
-<li>标签的水平中心x坐标d＝1.0*头像的水平中心x坐标＋0.0 （头像和标签水平中心对齐）</li>
-<li>标签的顶部y坐标＝1.0*头像的底部y坐标＋0.0 （头像的底部和标签顶部紧贴）</li>
-<li>标签的宽度w＝1.0*头像的宽度w＋0.0 （头像和标签宽度相等）</li>
+<li>getter=getterName</li>
+<li>setter=setterName</li>
 </ul>
-<p><img src="http://ww4.sinaimg.cn/large/71d610d9jw1eu7xmzbn3wj20hb0d0aax.jpg" alt="hengping"></p>
-<p>每个线性变化规则都叫做<strong>布局约束（Layout Constraint）</strong>。正如之前每个视图需要4个布局属性才可能准确定位，所以一般来说需要建立4个布局约束。</p>
+<p>举个例子：</p>
+<pre><code><span class="annotation">@property</span> (getter=show1,setter=<span class="string">show2:</span>)<span class="typename">int</span> age;<span class="comment">//现在，它的getter和setter的方法名字就变了</span>
+</code></pre><p>注意：如果你设置了readonly属性的话，那么你就不应该设置setter属性，要不然会给出一个编译器的警告。</p>
+<h6 id="2-设置只读或读写">2.设置只读或读写</h6><p>下面两个属性很好理解</p>
+<ul>
+<li>readwrite：表示既有getter，也有setter</li>
+<li>readonly：表示只有getter，没有setter</li>
+</ul>
+<p>这两个属性是互相排斥的，只能存在一个。</p>
+<h6 id="3-定义setter的语义">3.定义setter的语义</h6><p>下面的属性指定setter语义设置访问器。他们是互相排斥的。</p>
+<ul>
+<li>strong：指定有很强的(拥有)关系到目标对象。</li>
+<li>weak：指定有弱(non-owning)关系到目标对象。如果目的地对象销毁,属性值将自动设置为nil。(弱属性不支持OS X上的v10.6和iOS 4，使用指定取而代之）。</li>
+<li>copy：调用原始对象的copy()方法，创建一个原始对象的副本，用于分配给新的引用。原始的对象在调用release方法。当然这个属性只用于实现了NSCopying协议的对象类型。</li>
+<li>assign：指定使用简单的赋值的setter。这个属性是违约。　　使用这个属性对于标量的类型(如NSInteger和CGRect等）；</li>
+<li>retain： 指定retain应该调用对象上的。原始的对象在调用release。在OS X v10.6和之后,您可以使用这个关键字用于内存管理方面。</li>
+</ul>
+<h6 id="4-访问属性的线程安全">4.访问属性的线程安全</h6><p>nonatomic:表示不考虑线程安全</p>
 
       
     </div>
@@ -225,13 +265,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/08/04/setter and getter/">关于Objective-c的setter和getter</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/07/18/hello-world/">关于hexo搭建github博客几点问题</a>
+              <a href="/2015/07/19/autolayout/">Xcode布局原理</a>
             
           </div>
         </div>
@@ -343,7 +381,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#IOS8自动布局AutoLayout的基本原理"><span class="nav-number">1.</span> <span class="nav-text">IOS8自动布局AutoLayout的基本原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、View的基本原理"><span class="nav-number">1.0.1.</span> <span class="nav-text">一、View的基本原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、传统的布局方式及缺点"><span class="nav-number">1.0.2.</span> <span class="nav-text">二、传统的布局方式及缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、自动布局的基本原理"><span class="nav-number">1.0.3.</span> <span class="nav-text">三、自动布局的基本原理</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、为什么要用setter和getter？"><span class="nav-number">1.</span> <span class="nav-text">一、为什么要用setter和getter？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、setter和getter的一般写法"><span class="nav-number">2.</span> <span class="nav-text">二、setter和getter的一般写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、setter和getter的调用方法"><span class="nav-number">3.</span> <span class="nav-text">三、setter和getter的调用方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、setter和getter的改进写法"><span class="nav-number">4.</span> <span class="nav-text">四、setter和getter的改进写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、setter和getter的改进优化"><span class="nav-number">5.</span> <span class="nav-text">五、setter和getter的改进优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、@property的属性"><span class="nav-number">6.</span> <span class="nav-text">六、@property的属性</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-设置访问方法的名字"><span class="nav-number">6.0.0.1.</span> <span class="nav-text">1.设置访问方法的名字</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-设置只读或读写"><span class="nav-number">6.0.0.2.</span> <span class="nav-text">2.设置只读或读写</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-定义setter的语义"><span class="nav-number">6.0.0.3.</span> <span class="nav-text">3.定义setter的语义</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-访问属性的线程安全"><span class="nav-number">6.0.0.4.</span> <span class="nav-text">4.访问属性的线程安全</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

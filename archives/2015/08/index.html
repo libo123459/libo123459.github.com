@@ -47,7 +47,7 @@
 
 
 
-  <title> 猫大伯的啰里八嗦 </title>
+  <title> 归档 // 猫大伯的啰里八嗦 </title>
 </head>
 
 <body>
@@ -61,9 +61,7 @@
   </div>
 <![endif]-->
 
-  <div class="container one-column 
-   page-home 
-">
+  <div class="container one-column  page-archive ">
     <div class="headband"></div>
 
     <div id="header" class="header">
@@ -139,219 +137,61 @@
       <div class="main-inner">
         <div id="content" class="content">
           
-  <div id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-collapse">
+    <span class="archive-move-on"></span>
+
+    <span class="archive-page-counter">
+      
+      
+      
+        
+      
+      嗯..! 目前共计 3 篇日志。 继续努力。
+    </span>
+
     
+
+      
+      
       
 
-  <div class="post post-type-normal ">
+      
+        
+        <div class="collection-title">
+          <h2 class="archive-year motion-element" id="archive-year-2015">2015</h2>
+        </div>
+      
+      
+
+      
+
+  <div class="post post-type-normal">
     <div class="post-header">
 
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/04/setter and getter/">
-                关于Objective-c的setter和getter
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-08-04
-        </span>
-
+      <div class="post-title">
         
-
-        
-          
-        
-      </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="一、为什么要用setter和getter？">一、为什么要用setter和getter？</h3><p>setter和getter是赋值和取值的方法，符合OOP的封装原则和安全性。相比直接把变量暴露在外面，setter和getter是一个良好的中间层。<br><br>Stackoverflow中有个回答蛮不错：<br></p>
-<blockquote>
-<p>Tell, Don’t ask. The Pragmatic Bookshelf<br><br>“That is, you should endeavor to tell objects what you want them to do; do not ask them questions about their state, make a decision, and then tell them what to do.”</p>
-</blockquote>
-<p>既：直接暴露字段显然会更容易写出ask state, make decision, and tell them what to do的代码。这种写法更像过程式而不是面向对象。</p>
-<hr>
-<h3 id="二、setter和getter的一般写法">二、setter和getter的一般写法</h3><p>在Objective-C的setter和getter器，当然也和一般的语言没有什么不同。只不过，添加了一些自己的特性。<br>比如有一个实例变量：int age;<br>先在.h文件中声明setter和getter器<br><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/04/setter and getter/#more">
-              阅读全文 &raquo;
+            <a class="post-title-link" href="/2015/08/04/setter and getter/">
+              关于Objective-c的setter和getter
             </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/19/autolayout/">
-                Xcode布局原理
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-07-19
-        </span>
-
-        
-
-        
-          
         
       </div>
-    </div>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h2 id="IOS8自动布局AutoLayout的基本原理">IOS8自动布局AutoLayout的基本原理</h2><hr>
-<p>苹果在2014年发布iphone6和IOS8之后，针对新的设备和系统界面适配进行了若干改进，介于本人初次接触AutoLayout和sizeclass时有些疑问和不解，经过查阅资料和调试，整理了如下笔记。</p>
-<h4 id="一、View的基本原理">一、View的基本原理</h4><p>视图是app界面的最基本单元，在矩形区域内显示目标内容。如下图所示，头像和名字都是一个视图。</p>
-<p><img src="http://ww4.sinaimg.cn/large/71d610d9jw1eu7xo3qtlrj20h80j7gml.jpg" alt="shuping"></p>
-<p>对于一个矩形单元而言，要是在平面直角坐标系中准确描述其位置，需要如下四个布局属性（Layout Attribute）：<br></p>
-<ul>
-<li>水平位置－x</li>
-<li>垂直位置－y</li>
-<li>宽度－width</li>
-<li>高度－height</li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/19/autolayout/#more">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </div>
-  </div>
-
-
-    
-      
-
-  <div class="post post-type-normal ">
-    <div class="post-header">
-
-      
-      
-        <h1 class="post-title">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/18/hello-world/">
-                关于hexo搭建github博客几点问题
-              </a>
-            
-          
-        </h1>
-      
 
       <div class="post-meta">
-        <span class="post-time">
-          发表于 2015-07-18
-        </span>
-
-        
-
-        
-          
-        
+        <span class="post-time"> 08-04 </span>
       </div>
-    </div>
 
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>近日用hexo搭建github博客出现了若干状况，跌跌撞撞的花了大概2天才把这个博客成功的端出台面，介于总结并记录学习中的点滴，以备牢记，整理如下几点常见问题。</p>
-<h2 id="常见问题总汇">常见问题总汇</h2><h3 id="Mac无法安装hexo">Mac无法安装hexo</h3><p>和win机不同，osx由于权限问题，正常的git指令可能无法安装hexo，需换用如下指令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npm install --unsafe-perm --verbose -g hexo</span><br></pre></td></tr></table></figure>
-<h3 id="正确的deployment">正确的deployment</h3><p>网上搜索的其他部署配置可能有问题，经本人亲测，100%有效配置如下。<br>PS：冒号后注意接空格，否则可能导致yml无效</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy：</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: git@github.com:yourname/yourname.github.com.git(尽量用ssh地址)</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-<h3 id="执行hexo_d指令时提示找不到git">执行hexo d指令时提示找不到git</h3><p>自从hexo3.0之后，需要安装如下命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-<h3 id="输入某些指令后的其他问题">输入某些指令后的其他问题</h3><p>删除目录下的db.json文件</p>
-
-        
-      
-    </div>
-
-    <div class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
     </div>
   </div>
 
 
+
     
+
   </div>
 
   
+
 
         </div>
 
@@ -468,6 +308,12 @@
 
   
   
+  
+    <script type="text/javascript">
+      postMotionOptions = {stagger: 100, drag: true};
+    </script>
+  
+
 
   
   <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
@@ -487,6 +333,12 @@
   <script type="text/javascript" src="/js/search-toggle.js"></script>
 
   
+  
+    <script type="text/javascript" id="motion.page.archive">
+      $('.archive-year').velocity('transition.slideLeftIn');
+    </script>
+  
+
 
   <script type="text/javascript">
     $(document).ready(function () {
@@ -499,13 +351,6 @@
   
 
   
-  
-  
-
-  
-
-
-
 
   
   
